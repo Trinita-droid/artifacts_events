@@ -26,6 +26,16 @@ jobs:
         run: npm ci
       - name: build code
         run: npm run build
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+        # provide name of artifact to retrieve auto
+          name: dist-files
+          # where to find the files that should be stored
+          path: |
+            dist
+            package.json
+
   deploy:
     needs: build
     runs-on: windows-latest
