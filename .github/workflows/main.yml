@@ -1,0 +1,47 @@
+name: artifacts workflow
+on:
+  push:
+    branches:
+      -main
+      -master
+jobs:
+  test:
+    runs-on: windows-latest
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v3
+      - name: install dependencies
+        run: npm ci
+      - name: lint code
+        run: npm run lint
+      - name: test code
+        run: npm run test
+  build:
+    needs: test
+    runs-on: windows-latest
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v3
+      - name: install dependencies
+        run: npm ci
+      - name: build code
+        run: npm run build
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+        # provide name of artifact to retrieve auto
+          name: dist-files
+          # where to find the files that should be stored
+          path: |
+            dist
+            package.json
+
+  deploy:
+    needs: build
+    runs-on: windows-latest
+    steps:
+      - name: deploy
+        run: echo "Deploying.."
+
+
+
