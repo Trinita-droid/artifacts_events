@@ -2,7 +2,6 @@ name: artifacts workflow demo
 on:
   push:
     branches:
-      - main
       - master
 jobs:
   test:
@@ -10,6 +9,8 @@ jobs:
     steps:
       - name: Get the code
         uses: actions/checkout@v3
+      - name: Install node.js
+        uses: actions/setup-node@v3
       - name: install dependencies
         run:  npm ci
       - name: lint code
