@@ -1,4 +1,4 @@
-name: artifacts workflow
+name: artifacts workflow demo
 on:
   push:
     branches:
