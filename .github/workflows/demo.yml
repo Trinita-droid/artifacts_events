@@ -10,9 +10,11 @@ jobs:
       - name: Get the code
         uses: actions/checkout@v3
       - name: Install node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node
       - name: install dependencies
-        run:  npm ci
+        run: | 
+           npm ci
+           echo "npm ci completed"
       - name: lint code
         run: npm run lint
       - name: test code
