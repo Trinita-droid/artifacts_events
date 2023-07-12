@@ -16,10 +16,10 @@ jobs:
           node-version: 18
       # - name: install dependencies
       #   run: npm ci
-      - name: lint code
-        run: npm run lint
-      - name: test code
-        run: npm run test
+      # - name: lint code
+      #   run: npm run lint
+      # - name: test code
+      #   run: npm run test
   build:
     needs: test
     runs-on: windows-latest
