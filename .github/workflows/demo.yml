@@ -9,12 +9,12 @@ jobs:
     steps:
       - name: Get the code
         uses: actions/checkout@v3
-      - name: Install node.js
-        uses: actions/setup-node
+      - name : Install NodeJS
+        uses : actions/setup-node@v3 
+        with :
+          node-version: 18
       - name: install dependencies
-        run: | 
-           npm ci
-           echo "npm ci completed"
+        run: npm ci
       - name: lint code
         run: npm run lint
       - name: test code
