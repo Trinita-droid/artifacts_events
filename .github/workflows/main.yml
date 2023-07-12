@@ -2,8 +2,8 @@ name: artifacts workflow
 on:
   push:
     branches:
-      -main
-      -master
+      - main
+      - master
 jobs:
   test:
     runs-on: windows-latest
