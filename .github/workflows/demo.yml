@@ -2,6 +2,7 @@ name: artifacts workflow demo
 on:
   push:
     branches:
+      # - main
       - master
 jobs:
   test:

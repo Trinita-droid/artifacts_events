@@ -1,47 +1,28 @@
-name: artifacts workflow
-on:
-  push:
-    branches:
-      - main
-      
+name: Deploy Project
+#this workflow will run whenever we push a new commit to repo do the foll:
+on:  [push, workflow_dispatch] #to maually trigger the workflow add it as second event
 jobs:
   test:
     runs-on: windows-latest
-    steps:
-      - name: Get the code from repo
-        uses: actions/checkout@v3
-      - name: install dependencies
+    steps: #step 1 is to download the code from guthub repo to the runner using actions. to do this we have another key building block provided by github
+      - name: Get code
+
+#action - performs frequent tasks. can build owr own actions
+#checkout action
+#to use an action we use 'uses' keyword'
+        uses: actions/checkout@v3 #define identifier of the action
+        # some actions require config that can be provided with 'with' kwd
+        # with :
+        #can control with repo to use under this, also change some settings.
+#step 2 to make sure we have node.js installed.  but to install manaully we can add a step:
+      - name : Install NodeJS
+        uses : actions/setup-node@v3 
+        with :
+          node-version: 18
+  #  install dependency for the 3rd step
+      - name : Install dependencies
+      # we need osme action to do this , we can also use, 'run npm ci
         run: npm ci
-      - name: lint code
-        run: npm run lint
-      - name: test code
-        run: npm run test
-  build:
-    needs: test
-    runs-on: windows-latest
-    steps:
-      - name: Get the code
-        uses: actions/checkout@v3
-      - name: install dependencies
-        run: npm ci
-      - name: build code
-        run: npm run build
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v3
-        with:
-        # provide name of artifact to retrieve auto
-          name: dist-files
-          # where to find the files that should be stored
-          path: |
-            dist
-            package.json
-
-  deploy:
-    needs: build
-    runs-on: windows-latest
-    steps:
-      - name: deploy
-        run: echo "Deploying.."
-
-
-
+      # we run tests after these are installed in the runner, running a regular cmd 
+      - name: Run tests
+        run : npm test
